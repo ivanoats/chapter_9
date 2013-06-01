@@ -24,8 +24,19 @@
   <div class="slides">
     <section>
       <h1>Rails 4 in Action Chapter 9</h1>
-      <h2>Paperclip++</h2>
     </section>
+    <section>
+      <img alt="screenshot" src="/images/ticketee-new-ticket.png">
+    </section>
+    <section>
+      <img alt="screenshot" src="/images/ticketee-new-tickets.png">
+    </section>
+    <section>
+      <h2>It looks like you're trying to attach something</h2>
+      <img alt="clippy" src="/images/clippy.jpg">
+      <p><a href="https://github.com/thoughtbot/paperclip">github.com/thoughtbot/paperclip</a></p>
+    </section>
+
     <section>
       <section class="left">
         <h3><code class="no-caps">accepts_nested_atrributes_for</code></h3>
@@ -52,13 +63,31 @@ end
         </code></pre>
       </section>
     </section>
+
     <section class="left">
       <h3><code class="no-caps">exists?, ActiveRecord::FinderMethods</code></h3>
-      <p>returns true if a record exists in a table that matches the id or conditions given</p>
-      <p style="font-size: .5em"><a href="http://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-exists-3F">link to the api docs</a></p>
+      <p>returns true if a record exists in a table that matches the id or
+      conditions given</p>
+      <p style="font-size: .5em"><a
+        href="http://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-exists-3F">
+        link to the api docs</a></p>
 
       <h3><code class="no-caps">exists?, Paperclip::Storage::Filesystem</code></h3>
       <p>returns true if the attached file exists</p>
+    </section>
+
+    <section>
+      <h3><code class="no-caps">fields_for(record_name, record_object = nil,
+          options = {}, &block)</code></h3>
+      <p>Creates a scope around a specific model object like #form_for, but
+      doesn’t create the form tags themselves. This makes #fields_for suitable
+      for specifying additional model objects in the same form.</p>
+    </section>
+    <section>
+      <h3>Cleaning the database</h3>
+    </section>
+    <section>
+      <h3>Using Javascript</h3>
     </section>
  		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.min.js"></script>
