@@ -37,10 +37,18 @@
       <p><a href="https://github.com/thoughtbot/paperclip">github.com/thoughtbot/paperclip</a></p>
     </section>
 
-    <section>
-      <img alt="capybara" src="/images/capybara.jpg" width="300">
-      <h1>Capybara can do it!</h1>
-      <h3><code class="no-caps">attach_file(locator, path, options = {})</code></h3>
+    <section class="left">
+      <h3>Capybara can do it!</h3>
+      <p><img alt="capybara" src="/images/capybara.jpg" width="300"></p>
+      <code class="no-caps">attach_file(locator, path, options = {})</code>
+      <p>Find a file field on the page and attach a file given its path. The
+      file field can be found via its name, id or label text.</p>
+
+      <code>page.attach_file(locator, '/path/to/file.png')</code>
+      <ul>
+        <li style="font-size: .6em">locator (String) — Which field to attach the file to</li>
+        <li style="font-size: .6em">path (String) — The path of the file that will be attached, or an array of paths</li>
+      </ul>
       <p>test files go in <code>spec/fixtures</code> directory</p>
     </section>
 
