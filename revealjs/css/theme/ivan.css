@@ -21,6 +21,12 @@
   font-family: "Anonymous Pro", Inconsolata, Courier, monospace; }
 .reveal section h3 {
   font-size: 1.1em; }
+.reveal section h1.no-caps {
+  text-transform: none; }
+.reveal section h2.no-caps {
+  text-transform: none; }
+.reveal section h3.no-caps {
+  text-transform: none; }
 .reveal section p {
   font-size: .7em; }
 
