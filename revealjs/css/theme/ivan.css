@@ -19,6 +19,9 @@
 
 .reveal section code {
   font-family: "Anonymous Pro", Inconsolata, Courier, monospace; }
+.reveal section div.left_column {
+  text-align: left;
+  float: left; }
 .reveal section h3 {
   font-size: 1.1em; }
 .reveal section h1.no-caps {

@@ -27,18 +27,26 @@
     </section>
 
     <section>
-      <h3>Part one</h3>
+      <div class="left_column">
+        <h2> Part one</h2>
+        <p>Attach one file at a time</p>
+      </div>
       <img alt="screenshot" src="/images/ticketee-new-ticket.png">
     </section>
 
     <section>
-      <h3>Part two</h3>
+      <div class="left_column">
+        <h2>Part two</h2>
+        <p>Attach only three files</p>
+      </div>
       <img alt="screenshot" src="/images/ticketee-new-tickets.png">
     </section>
 
     <section>
-      <h3>Part three</h3>
-      <img alt="screenshot" src="/images/ticketee-new-tickets-js.png">
+      <div class="left_column">
+        <h2 style="float:left">Part three</h2>
+        <img alt="screenshot" src="/images/ticketee-new-tickets-js.png">
+      </div>
     </section>
 
     <section>
@@ -59,14 +67,18 @@
       <p><a href="https://github.com/thoughtbot/paperclip">github.com/thoughtbot/paperclip</a></p>
     </section>
 
+    <section>
+      <h1>How can we test file uploads?</h1>
+    </section>
+
     <section class="left">
       <h3>Capybara can do it!</h3>
       <p><img alt="capybara" src="/images/capybara.jpg" width="300"></p>
-      <code class="no-caps">attach_file(locator, path, options = {})</code>
+      <code class="no-caps">attach_file(<a href="http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Base">locator</a>, path, options = {})</code>
       <p>Find a file field on the page and attach a file given its path. The
       file field can be found via its name, id or label text.</p>
 
-      <code>page.attach_file(locator, '/path/to/file.png')</code>
+      <code>page.attach_file(<a href="http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Base">locator</a>, '/path/to/file.png')</code>
       <ul>
         <li style="font-size: .6em">locator (String) — Which field to attach the file to</li>
         <li style="font-size: .6em">path (String) — The path of the file that will be attached, or an array of paths</li>
@@ -87,16 +99,18 @@
     </section>
 
     <section>
+      <p>part one</p>
       <code>rails g paperclip ticket asset</code>
       <img src="/images/erd-mid-chapter.png" alt="ERD diagram">
     </section>
 
     <section>
-      <h2>BTW, you can't name a model "File"</h2>
-      <p>because there is already a File object in ruby</p>
+      <h2>You can't name a model "File"</h2>
+      <p>because there is already a File object in core ruby</p>
     </section>
 
     <section>
+      <p>part two</p>
       <code>rails g model asset</code>
       <img src="/images/erd.png" alt="ERD diagram">
     </section>
@@ -124,6 +138,10 @@ class Asset < ActiveRecord::Base
   has_attached_file :asset
 end
       </code></pre>
+    </section>
+
+    <section>
+      <img alt="philosoraptor" src="images/philosoraptor_exists.jpg">
     </section>
 
     <section class="left">
