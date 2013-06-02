@@ -169,12 +169,36 @@ working
     </section>
 
     <section>
-      <h1>Cleaning the database</h1>
+      <h1>Testing Javascript</h1>
+      <p>Capybara uses <b>Selenium WebDriver</b> to control Firefox</p>
+      <p><code>scenario "Creating a ticket with an attachment", :js => true</code></p>
+      <p>Because Firefox updates, you have to update Selenium WebDriver</p>
+        <pre><code>
+group :test do
+  gem "selenium-webdriver"
+end
+        </code></pre>
     </section>
 
     <section>
-      <h1>Using Javascript</h1>
+      <h1>AJAX</h1>
+      <h2>Ansynchronous Request</h2>
+      <p>A request that lets the client do other work while the request is being processed, enhancing parallelism within an application</p>
+      <pre>
+        <code class="erb">
+<%= link_to "Add another file",
+  new_file_path,
+  :remote => true,
+  :update => "files",
+  :position => "after"  %>
+</code>
+</pre>
     </section>
+
+    <section>
+      <h1>Cleaning the database</h1>
+    </section>
+
 
  		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.min.js"></script>
