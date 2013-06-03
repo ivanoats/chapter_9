@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Chapter 9 notes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="css/reveal.min.css">
+  <link rel="stylesheet" href="css/theme/ivan.css" id="theme">
+
+  <!-- For syntax highlighting -->
+  <link rel="stylesheet" href="lib/css/zenburn.css">
+
+  <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+  <script>
+    document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+  </script>
+
+  <!--[if lt IE 9]>
+  <script src="lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+    <section>
+      <h1>Rails 4 in Action Chapter 9</h1>
+    </section>
+
+    <section>
+      <div class="left_column">
+        <h2> Part one</h2>
+        <p>Attach one file at a time</p>
+      </div>
+      <img alt="screenshot" src="/images/ticketee-new-ticket.png">
+    </section>
+
+    <section>
+      <div class="left_column">
+        <h2>Part two</h2>
+        <p>Attach only three files</p>
+      </div>
+      <img alt="screenshot" src="/images/ticketee-new-tickets.png">
+    </section>
+
+    <section>
+      <div class="left_column">
+        <h2>Part three</h2>
+        <p>Attach as many files as you want</p>
+      </div>
+        <img alt="screenshot" src="/images/ticketee-new-tickets-js.png">
+    </section>
+
+    <section>
+      <h1 class="no-caps">File Field Form Helper</h1>
+      <pre>
+        <code>
+          <p>
+            <%= f.label :asset, "File" %><br>
+            <%= f.file_field :asset %>
+          </p>
+        </code>
+      </pre>
+    </section>
+
+    <section>
+      <h2>It looks like you're trying to attach something</h2>
+      <img alt="clippy" src="/images/clippy.jpg">
+      <p><a href="https://github.com/thoughtbot/paperclip">github.com/thoughtbot/paperclip</a></p>
+    </section>
+
+    <section>
+      <h1>How can we test file uploads?</h1>
+    </section>
+
+    <section class="left">
+      <h3>Capybara can do it!</h3>
+      <p><img alt="capybara" src="/images/capybara.jpg" width="300"></p>
+      <code class="no-caps">attach_file(<a href="http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Base">locator</a>, path, options = {})</code>
+      <p>Find a file field on the page and attach a file given its path. The
+      file field can be found via its name, id or label text.</p>
+
+      <code>page.attach_file(<a href="http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Base">locator</a>, '/path/to/file.png')</code>
+      <ul>
+        <li style="font-size: .6em">locator (String) — Which field to attach the file to</li>
+        <li style="font-size: .6em">path (String) — The path of the file that will be attached, or an array of paths</li>
+      </ul>
+      <p>test files go in <code>spec/fixtures</code> directory</p>
+    </section>
+
+    <section>
+      <h1 class="no-caps">File Field Form Helper</h1>
+      <pre>
+        <code>
+          <p>
+            <%= f.label :asset, "File" %><br>
+            <%= f.file_field :asset %>
+          </p>
+        </code>
+      </pre>
+    </section>
+
+    <section>
+      <p>part one</p>
+      <code>rails g paperclip ticket asset</code>
+      <img src="/images/erd-mid-chapter.png" alt="ERD diagram">
+    </section>
+
+    <section>
+      <h2>You can't name a model "File"</h2>
+      <p>because there is already a File object in core ruby</p>
+    </section>
+
+    <section>
+      <p>part two</p>
+      <code>rails g model asset</code>
+      <img src="/images/erd.png" alt="ERD diagram">
+    </section>
+
+    <section class="left">
+      <h3><code class="no-caps">accepts_nested_atrributes_for</code></h3>
+      <ul>
+        <li>a model method</li>
+        <li>Defines an attributes writer for the specified association(s).</li>
+        <li>rails 3, you also need:<br>
+        <code>attr_accessible :nested-model_attributes</code></li>
+      </ul>
+    </section>
+    <section>
+      <h2>Nested Model Attributes</h2>
+      <pre><code class="ruby" data-trim>
+class Ticket < ActiveRecord::Base
+  has_many :assets
+  accepts_nested_attributes_for :assets
+  attr_accessible :description, :title, :assets_attributes
+end
+
+class Asset < ActiveRecord::Base
+  attr_accessible :asset
+  has_attached_file :asset
+end
+      </code></pre>
+    </section>
+
+    <section>
+      <img alt="philosoraptor" src="images/philosoraptor_exists.jpg">
+    </section>
+
+    <section class="left">
+      <h3><code class="no-caps">exists?, ActiveRecord::FinderMethods</code></h3>
+      <p>returns true if a record exists in a table that matches the id or
+      conditions given</p>
+      <p style="font-size: .5em"><a
+        href="http://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-exists-3F">
+        link to the api docs</a></p>
+
+      <h3><code class="no-caps">exists?, Paperclip::Storage::Filesystem</code></h3>
+      <p>returns true if the attached file exists</p>
+    </section>
+
+    <section>
+      <h3><code class="no-caps">fields_for(record_name, record_object = nil,
+          options = {}, &block)</code></h3>
+      <p>Creates a scope around a specific model object like #form_for, but
+      doesn’t create the form tags themselves. This makes #fields_for suitable
+      for specifying additional model objects in the same form.</p>
+    </section>
+
+    <section>
+      <h1>Protecting Files</h1>
+      <ul>
+        <li>Normally files are uploaded to public/system/...</li>
+        <li>BTW, make sure that directory is in <code>.gitignore</code></li>
+      </ul>
+    </section>
+
+    <section>
+      <h3><code class="no-caps">File.read(path)</code></h3>
+      <pre>
+        <code class="ruby">
+File.read
+(from ruby core)
+Implementation from IO
+
+IO.read(name, [length [, offset]] )   -> string
+
+Opens the file, optionally seeks to the given offset, then returns
+length bytes (defaulting to the rest of the file). read ensures
+the file is closed before returning.
+      </code>
+      </pre>
+    </section>
+
+    <section>
+      <h2 class="no-caps">ActionController::DataStreaming</h2>
+      <h3 class="no-caps"><code>send_file(path, options = {})</code></h3>
+      <p>Be careful to sanitize the path parameter if it is coming from a web
+      page. <code>send_file(params[:path])</code> allows a malicious user to download any
+      file on your server.</p>
+    </section>
+
+    <section>
+      <h2>Example</h2>
+      <pre>
+        <code class="bash" data-trim>
+% echo "working" > text.txt
+% ruby -e 'puts File.read("./text.txt")'
+working
+        </code>
+      </pre>
+    </section>
+
+    <section>
+      <h1>Testing Javascript</h1>
+      <p>Capybara uses <b>Selenium WebDriver</b> to control Firefox</p>
+      <p><code>scenario "Creating a ticket with an attachment", :js => true</code></p>
+      <p>Because Firefox updates, you have to update Selenium WebDriver</p>
+        <pre><code>
+group :test do
+  gem "selenium-webdriver"
+end
+        </code></pre>
+    </section>
+
+    <section>
+      <h1>AJAX</h1>
+      <h2>Ansynchronous Request</h2>
+      <p>A request that lets the client do other work while the request is being processed, enhancing parallelism within an application</p>
+      <pre>
+        <code class="erb">
+<%= link_to "Add another file",
+  new_file_path,
+  :remote => true,
+  :update => "files",
+  :position => "after"  %>
+</code>
+</pre>
+    </section>
+
+    <section>
+      <h1>Cleaning the database</h1>
+    </section>
+
+
+ 		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+ </div>
+</div>
+</body>
+</html>
